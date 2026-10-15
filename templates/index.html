@@ -1,0 +1,118 @@
+{% extends "base.html" %}
+
+{% block title %}MIND READER AI — Condition-Based Decision Tree{% endblock %}
+
+{% block content %}
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge-wrap">
+      <span class="badge badge-purple">Binary Decision Trees &bull; Shannon Entropy &bull; Information Gain</span>
+    </div>
+
+    <h1 class="hero-title">
+      MIND READER <span class="gradient-text">AI</span>
+    </h1>
+    <p class="hero-subtitle">
+      Think of any secret number in your mind. You don't need to type it! Answer a few smart Yes/No conditions as the AI deduces your exact number using Information Entropy.
+    </p>
+
+    <div class="hero-cta">
+      <a href="{{ url_for('game') }}" class="btn btn-primary" style="font-size: 1.15rem; padding: 15px 36px;">
+        🧠 Start Mind Reader
+      </a>
+      <a href="{{ url_for('about') }}" class="btn btn-secondary" style="font-size: 1.15rem; padding: 15px 30px;">
+        💡 How It Works
+      </a>
+    </div>
+
+    <!-- Glowing Brain Illustration -->
+    <div class="hero-illustration">
+      <img src="{{ url_for('static', filename='images/neural_brain.svg') }}" alt="Neural Brain Illustration" class="hero-brain-svg">
+    </div>
+  </div>
+</section>
+
+<!-- How It Works Walkthrough Section -->
+<section style="padding: 40px 0 80px;">
+  <div class="container">
+    <div style="text-align: center; margin-bottom: 40px;">
+      <span class="badge badge-cyan">Simple 3-Step Process</span>
+      <h2 style="font-size: 2.2rem; font-weight: 800; margin-top: 10px;">How The AI Reads Your Mind</h2>
+      <p style="color: var(--text-muted); max-width: 600px; margin: 8px auto 0;">
+        Powered by Information Theory and Binary Decision Trees.
+      </p>
+    </div>
+
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-icon">💭</div>
+        <h3 class="card-title">1. Hold a Secret Number</h3>
+        <p class="card-desc">
+          Think of any number between 1 and 30 in your head. Do not click it or type it — keep it secret in your mind.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">❓</div>
+        <h3 class="card-title">2. Answer Strategic Conditions</h3>
+        <p class="card-desc">
+          The AI asks dynamic Yes/No questions (e.g. <em>Is it even? Is it > 15? Is it prime? Is it a multiple of 3?</em>).
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">🎯</div>
+        <h3 class="card-title">3. The Mind-Read Reveal</h3>
+        <p class="card-desc">
+          With each answer, the candidate space is cut in half until only 1 number remains. The AI reveals your exact number!
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AI Theory Section -->
+<section style="padding: 40px 0 80px; background: rgba(15, 23, 42, 0.4);">
+  <div class="container">
+    <div style="text-align: center; margin-bottom: 40px;">
+      <span class="badge badge-purple">Academic Rigor</span>
+      <h2 style="font-size: 2.2rem; font-weight: 800; margin-top: 10px;">The Artificial Intelligence Inside</h2>
+      <p style="color: var(--text-muted); max-width: 650px; margin: 8px auto 0;">
+        No tricks or lucky guesses — pure mathematical Decision Tree optimization.
+      </p>
+    </div>
+
+    <div class="grid-3">
+      <div class="card">
+        <div class="card-icon">🌲</div>
+        <h3 class="card-title">Binary Decision Trees</h3>
+        <p class="card-desc">
+          Evaluates predicates (parity, multiples, inequalities) to build an optimal traversal tree with \(O(\log_2 N)\) search efficiency.
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">📉</div>
+        <h3 class="card-title">Shannon Entropy</h3>
+        <p class="card-desc">
+          Tracks information uncertainty in bits. Each question reduces entropy from \(4.91 \text{ bits}\) down to \(0.0 \text{ bits}\).
+        </p>
+      </div>
+
+      <div class="card">
+        <div class="card-icon">⚡</div>
+        <h3 class="card-title">Information Gain</h3>
+        <p class="card-desc">
+          At every step, the AI dynamically selects the condition that partitions remaining numbers as close to a 50/50 balance as possible.
+        </p>
+      </div>
+    </div>
+
+    <div style="text-align: center; margin-top: 40px;">
+      <a href="{{ url_for('game') }}" class="btn btn-primary" style="font-size: 1.15rem; padding: 14px 36px;">
+        🎮 Play Condition Mind Reader Now
+      </a>
+    </div>
+  </div>
+</section>
+{% endblock %}

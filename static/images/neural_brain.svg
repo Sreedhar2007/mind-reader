@@ -1,0 +1,113 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <!-- Background Radial Glow -->
+    <radialGradient id="brainGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#8b5cf6" stop-opacity="0.35" />
+      <stop offset="60%" stop-color="#3b82f6" stop-opacity="0.15" />
+      <stop offset="100%" stop-color="#0a0e1a" stop-opacity="0" />
+    </radialGradient>
+
+    <!-- Neon Gradients -->
+    <linearGradient id="neonPurple" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#a855f7" />
+      <stop offset="100%" stop-color="#6366f1" />
+    </linearGradient>
+
+    <linearGradient id="neonCyan" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#06b6d4" />
+      <stop offset="100%" stop-color="#3b82f6" />
+    </linearGradient>
+
+    <filter id="glowFilter" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <filter id="intenseGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="12" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Ambient Glow -->
+  <circle cx="250" cy="250" r="220" fill="url(#brainGlow)" />
+
+  <!-- Neural Network Outer Connections -->
+  <g stroke="#3b82f6" stroke-opacity="0.3" stroke-width="1.5">
+    <line x1="250" y1="90" x2="170" y2="120" />
+    <line x1="250" y1="90" x2="330" y2="120" />
+    <line x1="170" y1="120" x2="120" y2="180" />
+    <line x1="330" y1="120" x2="380" y2="180" />
+    <line x1="120" y1="180" x2="100" y2="260" />
+    <line x1="380" y1="180" x2="400" y2="260" />
+    <line x1="100" y1="260" x2="140" y2="340" />
+    <line x1="400" y1="260" x2="360" y2="340" />
+    <line x1="140" y1="340" x2="210" y2="390" />
+    <line x1="360" y1="340" x2="290" y2="390" />
+    <line x1="210" y1="390" x2="250" y2="420" />
+    <line x1="290" y1="390" x2="250" y2="420" />
+  </g>
+
+  <!-- Left Hemisphere Neural Circuitry -->
+  <g stroke="url(#neonPurple)" stroke-width="2" stroke-linecap="round" filter="url(#glowFilter)">
+    <path d="M 240 100 C 190 100 130 140 130 200 C 130 240 150 260 140 300 C 130 340 170 380 235 390" fill="none" stroke-dasharray="6,4" />
+    <path d="M 235 130 C 170 140 160 210 180 250 C 200 290 160 330 230 360" fill="none" />
+    <line x1="180" y1="160" x2="235" y2="210" />
+    <line x1="150" y1="230" x2="220" y2="260" />
+    <line x1="170" y1="310" x2="235" y2="310" />
+  </g>
+
+  <!-- Right Hemisphere Neural Circuitry -->
+  <g stroke="url(#neonCyan)" stroke-width="2" stroke-linecap="round" filter="url(#glowFilter)">
+    <path d="M 260 100 C 310 100 370 140 370 200 C 370 240 350 260 360 300 C 370 340 330 380 265 390" fill="none" stroke-dasharray="6,4" />
+    <path d="M 265 130 C 330 140 340 210 320 250 C 300 290 340 330 270 360" fill="none" />
+    <line x1="320" y1="160" x2="265" y2="210" />
+    <line x1="350" y1="230" x2="280" y2="260" />
+    <line x1="330" y1="310" x2="265" y2="310" />
+  </g>
+
+  <!-- Central Brain Stem & Corpus Callosum -->
+  <line x1="250" y1="100" x2="250" y2="390" stroke="#a855f7" stroke-width="3" filter="url(#intenseGlow)" />
+
+  <!-- Neural Nodes (Synapses) -->
+  <g filter="url(#glowFilter)">
+    <!-- Central Nodes -->
+    <circle cx="250" cy="110" r="5" fill="#38bdf8" />
+    <circle cx="250" cy="170" r="6" fill="#c084fc" />
+    <circle cx="250" cy="240" r="7" fill="#38bdf8" />
+    <circle cx="250" cy="310" r="6" fill="#c084fc" />
+    <circle cx="250" cy="380" r="5" fill="#38bdf8" />
+
+    <!-- Left Nodes -->
+    <circle cx="170" cy="120" r="4.5" fill="#a855f7" />
+    <circle cx="120" cy="180" r="5" fill="#818cf8" />
+    <circle cx="180" cy="160" r="4" fill="#c084fc" />
+    <circle cx="100" cy="260" r="5.5" fill="#a855f7" />
+    <circle cx="150" cy="230" r="4.5" fill="#818cf8" />
+    <circle cx="180" cy="250" r="5" fill="#c084fc" />
+    <circle cx="140" cy="340" r="5" fill="#a855f7" />
+    <circle cx="170" cy="310" r="4" fill="#818cf8" />
+    <circle cx="210" cy="390" r="4.5" fill="#a855f7" />
+
+    <!-- Right Nodes -->
+    <circle cx="330" cy="120" r="4.5" fill="#06b6d4" />
+    <circle cx="380" cy="180" r="5" fill="#38bdf8" />
+    <circle cx="320" cy="160" r="4" fill="#67e8f9" />
+    <circle cx="400" cy="260" r="5.5" fill="#06b6d4" />
+    <circle cx="350" cy="230" r="4.5" fill="#38bdf8" />
+    <circle cx="320" cy="250" r="5" fill="#67e8f9" />
+    <circle cx="360" cy="340" r="5" fill="#06b6d4" />
+    <circle cx="330" cy="310" r="4" fill="#38bdf8" />
+    <circle cx="290" cy="390" r="4.5" fill="#06b6d4" />
+  </g>
+
+  <!-- Glowing Mind Waves -->
+  <path d="M 220 70 Q 250 50 280 70" fill="none" stroke="#38bdf8" stroke-width="2" opacity="0.6" filter="url(#glowFilter)" />
+  <path d="M 200 50 Q 250 25 300 50" fill="none" stroke="#a855f7" stroke-width="2" opacity="0.4" filter="url(#glowFilter)" />
+</svg>

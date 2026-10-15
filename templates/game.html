@@ -1,0 +1,174 @@
+{% extends "base.html" %}
+
+{% block title %}Mind Reader AI — Condition-Based Decision Tree{% endblock %}
+
+{% block content %}
+<div class="container game-layout">
+
+  <!-- HUD Bar -->
+  <div class="game-hud" style="max-width: 850px; margin: 0 auto 28px;">
+    <div class="hud-stat">
+      <span class="hud-label">Game Type</span>
+      <span class="hud-value" style="font-size: 1.25rem; color: #38bdf8;">Condition Mind Reader</span>
+    </div>
+    <div class="hud-stat">
+      <span class="hud-label">Target Domain</span>
+      <span class="hud-value highlight-cyan" id="hud-target-domain" style="font-size: 1.25rem;">1 to 50</span>
+    </div>
+    <div class="hud-stat">
+      <span class="hud-label">Algorithm</span>
+      <span class="hud-value highlight-purple" style="font-size: 1.25rem;">Binary Decision Tree</span>
+    </div>
+    <div class="hud-stat">
+      <span class="hud-label">Max Questions</span>
+      <span class="hud-value" id="hud-max-questions" style="font-size: 1.25rem; color: #10b981;">&le; 6 Questions</span>
+    </div>
+  </div>
+
+  <!-- CONDITION MIND READER MAIN CONTAINER -->
+  <div id="condition-interrogator-view" class="arena-box" style="max-width: 850px; margin: 0 auto;">
+    <div class="arena-header">
+      <h3 class="arena-title">
+        <span>🧠</span> Condition Mind Reader
+      </h3>
+      <span class="badge badge-purple" id="interrogator-entropy-badge">Information Gain Engine</span>
+    </div>
+
+    <!-- Stage 1: Intro Card with Level Selector -->
+    <div id="interrogator-intro" style="text-align: center; padding: 32px 16px;">
+      <div style="font-size: 3.5rem; margin-bottom: 14px; animation: floatBrain 3s ease-in-out infinite;">🔮</div>
+      
+      <!-- Difficulty Level Selector -->
+      <div style="margin-bottom: 24px;">
+        <span style="font-size: 0.8rem; text-transform: uppercase; color: var(--text-dim); font-weight: 700; letter-spacing: 0.05em; display: block; margin-bottom: 10px;">
+          Choose Difficulty Level:
+        </span>
+        <div style="display: flex; justify-content: center; gap: 12px; flex-wrap: wrap;">
+          <button type="button" class="btn level-btn" data-level="easy" data-max="20" data-max-q="4">
+            🟢 Easy (1 to 20)
+          </button>
+          <button type="button" class="btn level-btn active" data-level="medium" data-max="50" data-max-q="6">
+            🟡 Medium (1 to 50)
+          </button>
+          <button type="button" class="btn level-btn" data-level="master" data-max="100" data-max-q="7">
+            🔴 Master (1 to 100)
+          </button>
+        </div>
+      </div>
+
+      <h2 style="font-size: 1.85rem; font-weight: 800; color: #f8fafc; margin-bottom: 12px;" id="interrogator-target-heading">
+        Think of ANY Number Between 1 and 50
+      </h2>
+      <p style="color: var(--text-muted); max-width: 580px; margin: 0 auto 28px; font-size: 1.05rem; line-height: 1.6;" id="interrogator-target-desc">
+        Do <strong>NOT</strong> click it and do <strong>NOT</strong> type it!<br>
+        Hold the number secretly in your head. The AI will ask you a few smart Yes/No condition questions and deduce your exact number in <strong>at most 6 questions</strong>!
+      </p>
+      <button id="interrogator-start-btn" class="btn btn-primary" style="font-size: 1.15rem; padding: 15px 40px;">
+        🚀 I've Got My Number! Read My Mind
+      </button>
+    </div>
+
+    <!-- Stage 2: Active Condition Questioning -->
+    <div id="interrogator-active" style="display: none;">
+      <!-- Search status indicators -->
+      <div style="display: flex; justify-content: space-between; align-items: center; background: var(--bg-card-inner); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 12px 18px; margin-bottom: 24px; flex-wrap: wrap; gap: 10px;">
+        <div>
+          <span style="font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; font-weight: 700;">Condition Step</span>
+          <div style="font-size: 1.15rem; font-weight: 800; color: #38bdf8;" id="interrogator-q-num">Condition 1 of 5</div>
+        </div>
+        <div>
+          <span style="font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; font-weight: 700;">Candidates Remaining</span>
+          <div style="font-size: 1.15rem; font-weight: 800; color: #c084fc;" id="interrogator-remaining-count">30 / 30</div>
+        </div>
+        <div>
+          <span style="font-size: 0.75rem; color: var(--text-dim); text-transform: uppercase; font-weight: 700;">Shannon Entropy</span>
+          <div style="font-size: 1.15rem; font-weight: 800; color: #10b981;" id="interrogator-entropy-val">4.91 bits</div>
+        </div>
+      </div>
+
+      <!-- Question Prompt Box -->
+      <div style="background: radial-gradient(circle at center, rgba(139, 92, 246, 0.12) 0%, transparent 80%); border: 1px solid rgba(139, 92, 246, 0.35); border-radius: var(--radius-lg); padding: 32px 24px; text-align: center; margin-bottom: 24px;">
+        <div style="font-size: 2rem; margin-bottom: 12px;">🤖</div>
+        <div id="interrogator-q-text" style="font-size: 1.55rem; font-weight: 800; color: #f8fafc; margin-bottom: 10px; line-height: 1.3;">
+          Is your secret number an EVEN number?
+        </div>
+        <p id="interrogator-q-sub" style="color: var(--text-dim); font-size: 0.9rem; margin-bottom: 24px;">
+          Splits remaining candidate pool 50% / 50%
+        </p>
+
+        <!-- YES / NO Action Buttons -->
+        <div style="display: flex; justify-content: center; gap: 20px; flex-wrap: wrap;">
+          <button id="interrogator-yes-btn" class="btn btn-cyan" style="min-width: 160px; font-size: 1.2rem; padding: 14px 32px;">
+            👍 YES
+          </button>
+          <button id="interrogator-no-btn" class="btn btn-secondary" style="min-width: 160px; font-size: 1.2rem; padding: 14px 32px; border-color: rgba(244, 63, 94, 0.5); color: #fda4af;">
+            👎 NO
+          </button>
+        </div>
+        <p style="color: var(--text-dim); font-size: 0.85rem; margin-top: 16px;">
+          (Keyboard shortcut: Press <kbd style="background:#1e293b; padding:2px 8px; border-radius:4px; border:1px solid #334155;">Y</kbd> for Yes or <kbd style="background:#1e293b; padding:2px 8px; border-radius:4px; border:1px solid #334155;">N</kbd> for No)
+        </p>
+      </div>
+
+      <!-- Live Candidates Board -->
+      <div style="margin-top: 20px;">
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <span style="font-size: 0.85rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em;">
+            Live Candidate Search Space (1 to 30)
+          </span>
+          <span style="font-size: 0.8rem; color: var(--text-dim);">Eliminated numbers fade out automatically</span>
+        </div>
+        <div id="interrogator-candidates-grid" class="candidates-grid">
+          <!-- Injected dynamically by game.js -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Stage 3: Deduction & Big Reveal -->
+    <div id="interrogator-reveal" style="display: none; text-align: center; padding: 28px 16px;">
+      <span class="badge badge-green" style="font-size: 0.95rem; padding: 6px 20px; margin-bottom: 16px;">
+        🎯 Mind Read Complete!
+      </span>
+      <h2 style="font-size: 2.4rem; font-weight: 900; color: #f8fafc; margin: 12px 0 6px;">
+        I HAVE READ YOUR MIND!
+      </h2>
+      <p style="color: var(--text-muted); font-size: 1.05rem; margin-bottom: 16px;">
+        Based on your condition answers, the AI has deduced your secret number:
+      </p>
+
+      <div id="interrogator-final-number" class="predicted-number-badge" style="font-size: 5.5rem; margin-bottom: 20px;">
+        --
+      </div>
+
+      <!-- Decision Path Box -->
+      <div class="card" style="background: var(--bg-card-inner); border-color: var(--border-color); text-align: left; margin: 24px 0;">
+        <h4 style="color: #38bdf8; font-size: 1.05rem; margin-bottom: 14px;">
+          🌲 Decision Tree Path Traversed:
+        </h4>
+        <div id="interrogator-path-list" style="display: flex; flex-direction: column; gap: 8px; font-size: 0.9rem;">
+          <!-- Injected dynamically -->
+        </div>
+      </div>
+
+      <!-- Pedagogical lesson -->
+      <div class="card" style="background: rgba(139, 92, 246, 0.1); border-color: rgba(139, 92, 246, 0.35); text-align: left; margin-bottom: 24px;">
+        <h4 style="color: #c084fc; font-size: 1.05rem; margin-bottom: 8px;">
+          🎓 College AI Concept: Binary Decision Trees &amp; Information Gain
+        </h4>
+        <p style="color: var(--text-muted); font-size: 0.9rem; line-height: 1.6;">
+          This algorithm uses <strong>Shannon Information Entropy</strong>: \(H(S) = -\sum p_i \log_2 p_i\). At each step, the AI evaluates candidate conditions (parity, divisibility, inequality, primes) and selects the predicate that splits the remaining candidates closest to 50/50. This guarantees halving the search space with each condition (\(O(\log_2 N)\)), deducing any number from 1 to 30 in at most 5 questions!
+        </p>
+      </div>
+
+      <button id="interrogator-restart-btn" class="btn btn-primary" style="font-size: 1.1rem; padding: 14px 36px;">
+        🔁 Read Another Number
+      </button>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/game.js') }}"></script>
+{% endblock %}

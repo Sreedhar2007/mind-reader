@@ -1,0 +1,148 @@
+{% extends "base.html" %}
+
+{% block title %}Statistics & Benchmark Dashboard — Mind Reader AI{% endblock %}
+
+{% block content %}
+<div class="container" style="padding: 40px 24px 80px;">
+
+  <!-- Header -->
+  <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 32px; flex-wrap: wrap; gap: 16px;">
+    <div>
+      <span class="badge badge-cyan">Performance Analytics</span>
+      <h1 style="font-size: 2.5rem; font-weight: 800; margin-top: 8px;">Game Statistics &amp; Model Benchmark</h1>
+      <p style="color: var(--text-muted); max-width: 650px;">
+        Transparent evaluation comparing live player prediction accuracy against offline scikit-learn model benchmark testing.
+      </p>
+    </div>
+
+    <button id="reset-all-btn" class="btn btn-secondary" style="border-color: rgba(244, 63, 94, 0.4); color: #fda4af;">
+      🗑️ Reset All History
+    </button>
+  </div>
+
+  <!-- Live KPI Metrics Grid -->
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">Total Rounds</div>
+      <div class="metric-number" id="stat-total-rounds">0</div>
+      <div class="metric-subtitle">Evaluated choices</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-label">Correct Predictions</div>
+      <div class="metric-number highlight-cyan" id="stat-correct">0</div>
+      <div class="metric-subtitle">Mind reads achieved</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-label">Incorrect Predictions</div>
+      <div class="metric-number" style="color: #fda4af;" id="stat-incorrect">0</div>
+      <div class="metric-subtitle">Player outsmarted AI</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-label">Live AI Accuracy</div>
+      <div class="metric-number highlight-purple" id="stat-accuracy">Not enough data</div>
+      <div class="metric-subtitle">Baseline chance is 10.0%</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-label">Highest Score</div>
+      <div class="metric-number" id="stat-highest-score">0</div>
+      <div class="metric-subtitle">Best session total</div>
+    </div>
+
+    <div class="metric-card">
+      <div class="metric-label">Longest Streak</div>
+      <div class="metric-number highlight-cyan" id="stat-longest-streak">0</div>
+      <div class="metric-subtitle">Consecutive correct reads</div>
+    </div>
+  </div>
+
+  <!-- Machine Learning Synthetic Model Benchmark Card -->
+  <div class="card" style="margin-bottom: 32px; border-color: rgba(139, 92, 246, 0.3);">
+    <div class="arena-header">
+      <h3 class="arena-title">
+        <span>🔬</span> Scikit-Learn Machine Learning Benchmark (Offline Evaluation)
+      </h3>
+      <span class="badge badge-purple">Scientific Evaluation</span>
+    </div>
+
+    <p style="color: var(--text-muted); font-size: 0.95rem; margin-bottom: 24px;">
+      Trained on synthetic human-behavior sequences (counters, repeaters, alternators, and random distributions) and evaluated strictly on unseen test data.
+    </p>
+
+    <div class="grid-3" style="margin-bottom: 24px;">
+      <div class="card" style="background: var(--bg-card-inner);">
+        <div class="metric-label">Classifier Algorithm</div>
+        <div id="bench-model-type" style="font-size: 1.1rem; font-weight: 700; color: #c084fc; margin: 6px 0;">Random Forest</div>
+        <div id="bench-samples" style="font-size: 0.85rem; color: var(--text-dim);">Loading...</div>
+      </div>
+
+      <div class="card" style="background: var(--bg-card-inner);">
+        <div class="metric-label">Test Set Accuracy</div>
+        <div class="metric-number highlight-cyan" id="bench-test-acc">--%</div>
+        <div class="metric-subtitle">Evaluated on unseen test split</div>
+      </div>
+
+      <div class="card" style="background: var(--bg-card-inner);">
+        <div class="metric-label">Dummy Baseline vs Chance</div>
+        <div style="font-size: 1.8rem; font-weight: 800; margin: 4px 0; color: var(--text-main);">
+          <span id="bench-baseline-acc">--%</span> <span style="font-size: 0.9rem; color: var(--text-dim); font-weight: 400;">(Chance: <span id="bench-chance">10%</span>)</span>
+        </div>
+        <div class="metric-subtitle">Most-frequent dummy predictor</div>
+      </div>
+    </div>
+
+    <!-- Feature Importances -->
+    <h4 style="font-size: 1.05rem; font-weight: 700; color: #f8fafc; margin-bottom: 12px;">
+      Key Feature Weights (Gini Importance)
+    </h4>
+    <div id="bench-features" class="feature-bars">
+      <!-- Injected by statistics.js -->
+    </div>
+  </div>
+
+  <!-- Mode Breakdown -->
+  <div style="margin-bottom: 32px;">
+    <h3 style="font-size: 1.4rem; font-weight: 700; margin-bottom: 16px;">Accuracy Breakdown by Game Mode</h3>
+    <div id="mode-stats-container" class="grid-3">
+      <!-- Injected by statistics.js -->
+    </div>
+  </div>
+
+  <!-- Recent Evaluated Rounds Table -->
+  <div class="card">
+    <div class="arena-header">
+      <h3 class="arena-title">
+        <span>📜</span> Recent Evaluated Rounds History
+      </h3>
+      <span class="badge badge-cyan">Audit Log</span>
+    </div>
+
+    <div class="table-responsive">
+      <table class="custom-table">
+        <thead>
+          <tr>
+            <th>Round</th>
+            <th>Mode</th>
+            <th>AI Forecast</th>
+            <th>Actual Choice</th>
+            <th>Outcome</th>
+            <th>Confidence</th>
+            <th>Detected Pattern / Explanation</th>
+          </tr>
+        </thead>
+        <tbody id="recent-rounds-tbody">
+          <!-- Injected by statistics.js -->
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/statistics.js') }}"></script>
+{% endblock %}

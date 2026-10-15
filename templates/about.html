@@ -1,0 +1,123 @@
+{% extends "base.html" %}
+
+{% block title %}About Project &amp; Architecture — Mind Reader AI{% endblock %}
+
+{% block content %}
+<div class="container" style="padding: 40px 24px 80px;">
+
+  <!-- Page Header -->
+  <div style="margin-bottom: 40px; text-align: center;">
+    <span class="badge badge-purple">Academic Project Documentation</span>
+    <h1 style="font-size: 2.6rem; font-weight: 800; margin-top: 8px;">Mind Reader AI: Decision Tree &amp; Information Theory</h1>
+    <p style="color: var(--text-muted); max-width: 700px; margin: 8px auto 0;">
+      A comprehensive technical breakdown of how artificial intelligence uses Binary Decision Trees, Shannon Information Entropy, and Information Gain to deduce human secret choices.
+    </p>
+  </div>
+
+  <!-- Section 1: Overview & Concept -->
+  <div class="card" style="margin-bottom: 28px;">
+    <h2 style="font-size: 1.5rem; margin-bottom: 14px; color: #38bdf8;">1. Project Overview &amp; The "Mind Reader" Principle</h2>
+    <p style="color: var(--text-muted); margin-bottom: 14px;">
+      The <strong>Condition Mind Reader</strong> creates the illusion of telepathy by asking a sequence of strategic Yes/No questions. The user never reveals, types, or selects their secret number beforehand.
+    </p>
+    <p style="color: var(--text-muted);">
+      Instead of guessing blindly, the AI uses <strong>Binary Decision Tree Traversal</strong>. By evaluating candidate conditions (parity, divisibility, inequality, and primality), the AI guarantees halving the search space with every question until only one unique number remains.
+    </p>
+  </div>
+
+  <!-- Section 2: System Architecture Diagram & Data Flow -->
+  <div class="card" style="margin-bottom: 28px;">
+    <h2 style="font-size: 1.5rem; margin-bottom: 14px; color: #c084fc;">2. System Architecture &amp; Data Flow</h2>
+    <p style="color: var(--text-muted); margin-bottom: 20px;">
+      The application follows a clean client-server architecture with stateful candidate evaluation.
+    </p>
+
+    <!-- Architecture Box -->
+    <div style="background: var(--bg-card-inner); border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 24px; font-family: var(--font-mono); font-size: 0.9rem; margin-bottom: 24px; overflow-x: auto;">
+      <div style="color: #38bdf8; font-weight: 700; margin-bottom: 8px;">[SYSTEM ARCHITECTURE]</div>
+<pre style="color: #cbd5e1; line-height: 1.4;">
++-----------------------------------------------------------------------+
+|                    FRONTEND CLIENT (HTML5 / CSS3 / JS)                 |
+|  - Modern Cyberpunk UI   - Real-Time Candidate Grid  - Web Audio Synth |
++-----------------------------------------------------------------------+
+                                  │   ▲
+     1. POST /api/interrogator/start   │   │ 2. First Question &amp; Candidates JSON
+     3. POST /api/interrogator/answer  │   │ 4. Filtered Candidates &amp; Next Question
+                                  ▼   │
++-----------------------------------------------------------------------+
+|                         FLASK REST BACKEND                             |
+|  - Endpoints: /api/interrogator/start, /api/interrogator/answer        |
+|  - Payload validation and candidate filtering                          |
++-----------------------------------------------------------------------+
+                                  │
+                                  ▼
++-----------------------------------------------------------------------+
+|                DECISION TREE INTERROGATOR ENGINE                       |
+|  - Shannon Entropy: H(S) = log2(|S|)                                   |
+|  - Information Gain Maximizer: splits pool closest to 50% / 50%        |
+|  - Predicate Evaluators: parity, divisibility, primes, squares         |
+|  - Terminal deduction when |S| == 1                                    |
++-----------------------------------------------------------------------+
+</pre>
+    </div>
+  </div>
+
+  <!-- Section 3: Information Theory & Algorithms -->
+  <div class="card" style="margin-bottom: 28px;">
+    <h2 style="font-size: 1.5rem; margin-bottom: 14px; color: #38bdf8;">3. Information Theory &amp; Shannon Entropy</h2>
+    <p style="color: var(--text-muted); margin-bottom: 16px;">
+      Claude Shannon’s <strong>Information Theory (1948)</strong> defines the uncertainty (entropy) of a probability distribution as:
+    </p>
+    
+    <div style="background: var(--bg-card-inner); border: 1px dashed rgba(56, 189, 248, 0.4); border-radius: var(--radius-md); padding: 18px; margin-bottom: 20px; font-family: var(--font-mono); color: #38bdf8;">
+      $$H(S) = -\sum_{i=1}^{N} p_i \log_2(p_i) = \log_2(N)$$
+    </div>
+
+    <div class="grid-2" style="margin-bottom: 20px;">
+      <div class="card" style="background: var(--bg-card-inner);">
+        <h4 style="color: #c084fc; margin-bottom: 8px;">Step-by-Step Entropy Reduction</h4>
+        <ul style="color: var(--text-muted); font-size: 0.9rem; padding-left: 18px; line-height: 1.8;">
+          <li><strong>Initial State (30 numbers):</strong> \(H(S) = \log_2(30) \approx 4.91\text{ bits}\)</li>
+          <li><strong>After Question 1 (15 numbers):</strong> \(H(S) = \log_2(15) \approx 3.91\text{ bits}\)</li>
+          <li><strong>After Question 2 (7 numbers):</strong> \(H(S) = \log_2(7) \approx 2.81\text{ bits}\)</li>
+          <li><strong>After Question 3 (3 numbers):</strong> \(H(S) = \log_2(3) \approx 1.58\text{ bits}\)</li>
+          <li><strong>After Question 4 (1 number):</strong> \(H(S) = \log_2(1) = 0.0\text{ bits}\) (Target Deduced!)</li>
+        </ul>
+      </div>
+
+      <div class="card" style="background: var(--bg-card-inner);">
+        <h4 style="color: #67e8f9; margin-bottom: 8px;">Strategic Condition Predicates</h4>
+        <ul style="color: var(--text-muted); font-size: 0.9rem; padding-left: 18px; line-height: 1.8;">
+          <li><strong>Parity:</strong> <code>x % 2 == 0</code> (cuts pool exactly in half)</li>
+          <li><strong>Median Partition:</strong> <code>x > median</code> (optimal binary cut)</li>
+          <li><strong>Divisibility:</strong> <code>x % 3 == 0</code> and <code>x % 5 == 0</code></li>
+          <li><strong>Primality:</strong> <code>x in primes</code></li>
+          <li><strong>Perfect Squares:</strong> <code>x in {1, 4, 9, 16, 25}</code></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Section 4: College Presentation Guide -->
+  <div class="card">
+    <h2 style="font-size: 1.5rem; margin-bottom: 14px; color: #f59e0b;">4. College Lecturer Demonstration Script</h2>
+    <p style="color: var(--text-muted); margin-bottom: 14px;">
+      When presenting this project to your college professor or examiner, use this structured explanation:
+    </p>
+
+    <ol style="color: var(--text-muted); padding-left: 20px; line-height: 1.8;">
+      <li><strong>Step 1: The Demonstration:</strong> Ask the lecturer or a classmate: <em>"Think of any number between 1 and 30 in your head. Do not tell me what it is."</em></li>
+      <li><strong>Step 2: Interactive Interrogation:</strong> Click <strong>"Read My Mind"</strong> and read each condition out loud:
+        <ul style="padding-left: 18px; margin-top: 4px;">
+          <li><em>"Is your secret number even?"</em> -> Click their answer.</li>
+          <li><em>"Is your secret number greater than 15?"</em> -> Click their answer.</li>
+        </ul>
+      </li>
+      <li><strong>Step 3: Point out the Live Candidate Board:</strong> Show how the numbers on screen gray out in real time as the search space shrinks.</li>
+      <li><strong>Step 4: The Grand Reveal:</strong> In just 4 or 5 questions, the AI reveals their exact number!</li>
+      <li><strong>Step 5: The Academic Explanation:</strong> Explain: <em>"This demonstrates a Binary Decision Tree with Shannon Entropy reduction. Because each condition splits the remaining pool approximately 50/50, the time complexity is strictly \(O(\log_2 N)\), meaning 30 numbers require at most 5 questions to isolate."</em></li>
+    </ol>
+  </div>
+
+</div>
+{% endblock %}

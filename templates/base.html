@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}Mind Reader AI — Intelligent Number Prediction{% endblock %}</title>
+  <meta name="description" content="An interactive web-based AI game that demonstrates machine learning pattern analysis and probability through intelligent number prediction.">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+  <link rel="icon" type="image/svg+xml" href="{{ url_for('static', filename='images/neural_brain.svg') }}">
+  {% block extra_head %}{% endblock %}
+</head>
+<body>
+  <!-- Ambient Neural Particle Canvas -->
+  <canvas id="particle-canvas"></canvas>
+
+  <!-- Sticky Navbar -->
+  <header class="navbar">
+    <div class="container nav-container">
+      <a href="{{ url_for('index') }}" class="brand-logo">
+        <img src="{{ url_for('static', filename='images/neural_brain.svg') }}" alt="Neural Brain Logo" class="brand-icon">
+        <span class="brand-text">MIND READER AI</span>
+      </a>
+
+      <nav>
+        <ul class="nav-links">
+          <li><a href="{{ url_for('index') }}" class="nav-link {% if request.path == '/' %}active{% endif %}">Home</a></li>
+          <li><a href="{{ url_for('game') }}" class="nav-link {% if request.path == '/game' %}active{% endif %}">Play Game</a></li>
+          <li><a href="{{ url_for('statistics') }}" class="nav-link {% if request.path == '/statistics' %}active{% endif %}">Statistics</a></li>
+          <li><a href="{{ url_for('about') }}" class="nav-link {% if request.path == '/about' %}active{% endif %}">About Project</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav-actions">
+        <!-- Sound Effect Toggle -->
+        <button id="sound-toggle-btn" class="btn-icon" aria-label="Toggle Sound Effects" title="Toggle Sound">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+        </button>
+        <a href="{{ url_for('game') }}" class="btn btn-primary" style="padding: 8px 18px; font-size: 0.9rem;">Play Now</a>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Content Block -->
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <p style="margin-bottom: 6px;">
+        <strong>Mind Reader AI</strong> — Built with Python, Flask, scikit-learn &amp; SQLite.
+      </p>
+      <p style="color: var(--text-dim); font-size: 0.85rem;">
+        Developed for College AI Demonstration &amp; Pattern Recognition Analysis &bull; Local Offline Architecture
+      </p>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>
